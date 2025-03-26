@@ -1,0 +1,265 @@
+Received: from KL1PR02MB7408.apcprd02.prod.outlook.com (2603:1096:820:124::9)
+ by TYZPR02MB7355.apcprd02.prod.outlook.com with HTTPS; Mon, 24 Mar 2025
+ 17:42:12 +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=rvGH3eeK5zHruIZFLb6JiowYmSUvvEYQ/tK2CdZsC7E561NkTjiSvL1DRoPWUIZ4zvL048Y9lAslx0nS2Lpb+6GO6ROyBLnPPuokkyKPk1R4zNAxtnaZOjgMfgMAZc0EyMeDn9ZYColQGPA/8440HvSjCF9pipOnpQKN0XA2peZtag10XMmtr0+q0ymxkZ48egKNd0PkFTBtgETdM5ITTqgNq8YKc4zXAVk9wzm2MAC3dv2d7n5ijx750alNXPXit06+nmoPwzIIWRQ9PJcrH/ZUXgj9//PLhjUWT9z+en8wScHJJGNn4C3AeTajslIDMx7W55P8XbWVf+y8KWXlVQ==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=UajJ/XSVnGKf6Glzb3paSYbV0xToZhS5Pd39UOsW+mY=;
+ b=QdFj7PeU5nLDvyUR6NO+nY6xQRbp9PlFYLyrOViBvU7zNoywTq2P+6VMrBbVvvIyRiYc54QJE50WIkz68ModfJ76SkFNPLYdxUmfRHjD1HGxz9TSWjTtj21nbgXDai2VPX/o5g+BRaxWZnIsNjF4yBRnQnVzi5Yb8S2lsr/wQd2OfyaTELIyVwfGs92NdF1D7sSxgzBlSKdJiXg2ld2LgkjWB7EtOCike/p0poEF0LUbj0YJoVXgmJWJ65aqSVS8O5f+iALyL0L6OPFugaXSFR/wzSV723uUpkfhS2IMyqL/75pJkEvDVm1UbWB5pwvuCbgfaWxfQYDTVWqRPDK9dw==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 40.92.53.52) smtp.rcpttodomain=outlook.com smtp.mailfrom=outlook.com;
+ dmarc=pass (p=none sp=quarantine pct=100) action=none
+ header.from=outlook.com; dkim=pass (signature was verified)
+ header.d=outlook.com; arc=pass (0 oda=0 ltdi=1)
+Received: from AM0PR01CA0151.eurprd01.prod.exchangelabs.com
+ (2603:10a6:208:aa::20) by KL1PR02MB7408.apcprd02.prod.outlook.com
+ (2603:1096:820:124::9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8583.23; Mon, 24 Mar
+ 2025 17:42:11 +0000
+Received: from AM4PEPF00027A69.eurprd04.prod.outlook.com
+ (2603:10a6:208:aa:cafe::32) by AM0PR01CA0151.outlook.office365.com
+ (2603:10a6:208:aa::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.42 via Frontend Transport; Mon,
+ 24 Mar 2025 17:42:08 +0000
+Authentication-Results: spf=pass (sender IP is 40.92.53.52)
+ smtp.mailfrom=outlook.com; dkim=pass (signature was verified)
+ header.d=outlook.com;dmarc=pass action=none
+ header.from=outlook.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of outlook.com designates
+ 40.92.53.52 as permitted sender) receiver=protection.outlook.com;
+ client-ip=40.92.53.52; helo=APC01-SG2-obe.outbound.protection.outlook.com;
+ pr=C
+Received: from APC01-SG2-obe.outbound.protection.outlook.com (40.92.53.52) by
+ AM4PEPF00027A69.mail.protection.outlook.com (10.167.16.87) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.20
+ via Frontend Transport; Mon, 24 Mar 2025 17:42:08 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:347946D26AB15E4B39C75B91CC75700D3394C8C20732118749036B6F44F9B6C4;UpperCasedChecksum:917005D77FC6FEE73C027C0466B688374769DB07F5F488728D0BA276A8F13532;SizeAsReceived:7532;Count:37
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Mda9b0gJ0CRZ0x3CQNIRmlYCwnhn413H+AwuWRCAklxDlvClSUMy1BrmJhXnB/ZydWwp1Njx+EDGzWxV4+0yUnVzIlsJ+9e0TYhdo2KwxRFMQk2ZlfaeYJbcq0UE5kDTfGpAsmh3pOCJ7f7T+1sqEESTsjBUog6d3VEiC6D1sm0Jlzfhlq4Ehx/uEA4FGguMNDJfebyq/pli+MB5R4V2KUkUCq0ZChN8VQYEooQAlDm3L/oiyfmOngUwnX+TPpisKvDo3wD5m89tgXILbsW3hBn53SfpMk2ZomUd6lMpg+ssddV0TtY3lzOW4pvkkFHWViMT5Ff+L/CNuUcJJM40Wg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=UajJ/XSVnGKf6Glzb3paSYbV0xToZhS5Pd39UOsW+mY=;
+ b=q9EJFFmGnxYlpQaPZxvjM0MQFvda89FD9tC4gNYTfYSPJ5rybQM/dQBiLaEXNAjBFWAzr5c2LTCiA+6YkzDQFyXZ7eTJmJjvibSTR/6kM2Xt8HDgg8pBcVHQsIiqoxYYPLw67dm54kwGzVvmM6E4DJ6/BrV0swNfSkFef/0JvhB7iZAdzAS7WQAmF4OOA+1IyS6XDezJ5zDsKwKwJNfL3ps/zWhdkTKowgTc0G7aWx91WaqSyedXokYz1G5R1fZ8Hbd3Flrfc4RsuqCp9FVaETi2Tgv4OT/5kOK5P6GRnS+D2KlIRLLFXWCSE3+9/JC2JxhssGCYxjc7l95TGeNFgA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=UajJ/XSVnGKf6Glzb3paSYbV0xToZhS5Pd39UOsW+mY=;
+ b=de3vUBpV3srhtAdJdMNQEBDpyHssyiDfNdphepFmrfCh6L4XaXNfqqroVJynH8hY7PfolXG1K+P5fD9QS/ZLNU2I6U0PiUnaGgcVnmEqtwhCq/SwiVUCyKvhG5hXdPGJv2appvALwuucyDKRTqgt22AUA0377ycZhd2D+IeXzotA5MvjMS7HUfDWXzad+hC7zd6KmKyj4V25BuQ34M0YXokLfIwoCx+rpLspW12CVVHIaEg9NTMdFkevJpKC12USAzHX9oKMlPKyB8L2lnEuhnurjzHmrHgac/WCVlVCldIF6WlweJYkq0wCA6a0zpVdFNFGWtqYSa5MEI677RJZyQ==
+Received: from TYZPR02MB7355.apcprd02.prod.outlook.com (2603:1096:405:3e::7)
+ by TYZPR02MB5986.apcprd02.prod.outlook.com (2603:1096:400:1f5::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8583.23; Mon, 24 Mar
+ 2025 17:42:06 +0000
+Received: from TYZPR02MB7355.apcprd02.prod.outlook.com
+ ([fe80::24d3:94be:8a8b:69e0]) by TYZPR02MB7355.apcprd02.prod.outlook.com
+ ([fe80::24d3:94be:8a8b:69e0%4]) with mapi id 15.20.8583.023; Mon, 24 Mar 2025
+ 17:42:05 +0000
+From: Vishalakshi Mandala R <vishalakshi.mandala@outlook.com>
+To: Vishalakshi Mandala R <vishalakshi.mandala@outlook.com>
+Subject: Closing Notice : Loan No:001
+Thread-Topic: Closing Notice : Loan No:001
+Thread-Index: AQHbnOP+G3iDED9vWk+CFkW+z5h4Gw==
+Date: Mon, 24 Mar 2025 17:42:05 +0000
+Message-ID: <TYZPR02MB735562C2A272808A8276964FE9A42@TYZPR02MB7355.apcprd02.prod.outlook.com>
+Accept-Language: en-IN, en-US
+Content-Language: en-IN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-traffictypediagnostic: TYZPR02MB7355:EE_|TYZPR02MB5986:EE_|AM4PEPF00027A69:EE_|KL1PR02MB7408:EE_|TYZPR02MB7355:EE_
+X-MS-Office365-Filtering-Correlation-Id: c8d5246f-71c4-4895-3356-08dd6afb3391
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:14566002|461199028|12121999004|8060799006|19110799003|15030799003|15080799006|8062599003|3412199025|440099028|3430499032|102099032|11091999006|1710799026;
+X-Microsoft-Antispam-Message-Info-Original: =?us-ascii?Q?cYyQy01CDRdtARC25eB+/9D3RaHs5YrolA3RwrfEfujfdp+zOSaIrZAcqVq8?=
+ =?us-ascii?Q?UH0H/z9lgXSo2LLvFkg44G8N25MdcqFNk9ajv6OxgvYSuLO1qSVgXtGCX6b/?=
+ =?us-ascii?Q?6v8GuGZa2vzsBLJWHjKxJ9CrE9ggBDJYAqfwZ0E9FI7gk98FhehbCy4eMH7v?=
+ =?us-ascii?Q?ELs/8W5LiSdpWK5DSvd3BWuc/fOv9GAoYPwsA13Ds7gPyvRQdgxwnQqKs7U9?=
+ =?us-ascii?Q?t1B3nIGqT3QCyaLZ2aE3NXNZBAB7T+cnU+PbWJCGZFm3INIUOrbL9pzJocrV?=
+ =?us-ascii?Q?Dl40cy58+8kDRl2rF1CFnSDaKw4od2YsqzjQm5SFhF4r0nLTfMRO0BXSV3kF?=
+ =?us-ascii?Q?HQ+Sc+zXGUxN4eXqCtnjnSHm8Lgq3MNtZ59D2pMEZSXcPWL3UpEHW4WS2A1Y?=
+ =?us-ascii?Q?8r4VnXl1jxh2KAv0j3wucQrLuRVv6sVZmyaUI02EscA08Q5pE5IFEgoGWYk6?=
+ =?us-ascii?Q?fjiDcETb3MTSYVXsRUzDhst+DADht6ZLcf2u99wPE4qJ00Dg+0vgrc50aMcJ?=
+ =?us-ascii?Q?Hp7MsL7Oz8FMkff8P7iLu6je7YWWliOZVTIZNdWYEwqhGJ+WhnGr4dmapABO?=
+ =?us-ascii?Q?IuxZsT9nMPUSl2c03BxrDcGpExBehNzHwnXVINl5KMqIeVRoJjixDCTgaRtM?=
+ =?us-ascii?Q?zczLIXltglx60dr2w6y1TsNyBQ2VKXLv0ofJoKnVQNjaqw3VzLZEWBN5Wxri?=
+ =?us-ascii?Q?Ia7qt1ZJ2c09C7XzCtheP5upI3OaBR725m/9veW7X7tehLwuTfttcja1ihNm?=
+ =?us-ascii?Q?Yk37k1n/yJjh+2sz32Hrq2jJ6pvQ/qgdfr102YY90xf8uf7mU2YR2gRGXyF/?=
+ =?us-ascii?Q?CgD14pzTCjJ2uTo93BTr+BeUk/BPfv9eR95zniZFweYZuej36F5mBosyP4TZ?=
+ =?us-ascii?Q?Uwfghusx1p56nxNvZbNgTShcesVWcjjiQqTB8kpauEaTgIt6dR/6ltcEof0r?=
+ =?us-ascii?Q?R0dmDgnP/nM81mnRWADTFTFYBFrM4QDn+mwb9eLm3+s9ld9G16+fxwp9XG53?=
+ =?us-ascii?Q?Ak63SaDedK8EI1h9DsjsXLeUlFkxZEr7PrL3m/OgyBXdNzMul2Xh6sTMUH/I?=
+ =?us-ascii?Q?nauAn8OE6tATMaBrwEZThG3oYpt53AZkpn9/TFi6ef5d8lmf/UtT+lDeeiPd?=
+ =?us-ascii?Q?V//T2iGC2FV/bH41PxCj/zvIXYuxufZ68LUvCw0TRlq7rcJoIXqkDiDQS2Ib?=
+ =?us-ascii?Q?NbdV+aRRjXu2MXpePsQVVt22ECwNrST8uIj1lQ=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0: =?iso-8859-1?Q?3leYkckgEPQguYxZmkzJ16R1XPZoXeUIca16crXi5XboDSrofxfXF9UvH7?=
+ =?iso-8859-1?Q?pJit/gIvNdcP31iVv4iVD8thfNYnN60QTJVo2DpWObH1hLwOW9sgnvKfRj?=
+ =?iso-8859-1?Q?OnNUSPBTbXkPH0fbCGU4Ntad+yKl9w+sZsencrba36uW5Sk5yPB9tXwWhv?=
+ =?iso-8859-1?Q?WYrV15FqGNfwMkfo4CBNDQo2GxWOMjFp7Hf+IJMTjftareUMwnsBIZ/kDw?=
+ =?iso-8859-1?Q?yMXUNjtVXQqKuxTQNyOVx2jkwSgQO3gHP1N2EsUseRRDwVCCu6ZL3oKKmp?=
+ =?iso-8859-1?Q?0PwOTg/IpKcCcvGLlKkcYnWYbIJN44sgbUe6DvW4F/mZbFFp7MrGl77oE1?=
+ =?iso-8859-1?Q?amn39Swc82WI7HFAYCFbagWT6FXTxlDnEH/7lIECcGj8tif/cdzbFPjZkX?=
+ =?iso-8859-1?Q?RuOE13WbvlQevsBXIXx4qBsQjeVw8DIccUb7dBYb24gCKO0EY1wT3M+Qa3?=
+ =?iso-8859-1?Q?N2lujRLbvnPfBnuCTe3HPMJ3apGmYaFjQc9IzYmS3r/PgoAh2uP/2YZTCR?=
+ =?iso-8859-1?Q?QwV1kELP+yBMBPDP/HS06pZVcGwRkY5NoGjAdilz/MU8F1K/9BHWbHNx+J?=
+ =?iso-8859-1?Q?0eBRqyqzqhFcL50lE2USmnBjAY/P5Dlz8QO4iY+Zk+zDAiS4kd90RAe5bt?=
+ =?iso-8859-1?Q?iXuASJ9MAm5V3mDVGqJ5io3YlL0/257jQRTnOk4DK1iD6VJG9WBlhOOWhW?=
+ =?iso-8859-1?Q?92xHja+ffKp6ivCYAWDma9g6X2wjkmlLQLafiEq0ITmezJzPAXuckCxPOc?=
+ =?iso-8859-1?Q?iTxGXcyRn2hIbu48ODKHP+SGLNoZpNiEkhPz5nTXo1j2m8oBJAVbXV0Ezc?=
+ =?iso-8859-1?Q?5y2NUuLMwkbwqB55/G/DHzSzjzANlsAQ5rhQbWHiNVLWP2VSuWJfZdRYXv?=
+ =?iso-8859-1?Q?m3jPUO6ecZ6nNphrlqBy9sjh+r0XVB8W/iz8R3cQS24/VU4H9p1MA0w3Oh?=
+ =?iso-8859-1?Q?403nOVzvJLBG3MbLp1woZ/H4QlAqlhTrwu3VzKmAcLVpuWQSMXZf0Uu9+u?=
+ =?iso-8859-1?Q?bhi5nwlEtdnX08vvWV60hgji2i6iv4HIHLUadXz3syYpOgDTBZ4W2rAGl2?=
+ =?iso-8859-1?Q?lMn9OcQWUk/+Sxptve4EoBt9ojbSJm/9abm4QIImS9CEpiHtCVaxzZAfGC?=
+ =?iso-8859-1?Q?RISpebKOZ3YSt76b7QKcqawsjEa1hMTRiYKiKPupB4t6AbJjRJFUV9GkRU?=
+ =?iso-8859-1?Q?bFFckUaAJeS80ML8+5zQu/PRBYd7+N1xLcDh5bI3wQvK0d1b8IMid+MnwU?=
+ =?iso-8859-1?Q?h5Mch8m3ETA0ZzvrXLxzogmXOztklcpqtOcGR0BAa1J09aEFhiisDU+qKf?=
+ =?iso-8859-1?Q?F9wP?=
+Content-Type: multipart/alternative;
+	boundary="_000_TYZPR02MB735562C2A272808A8276964FE9A42TYZPR02MB7355apcp_"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR02MB5986
+X-IncomingHeaderCount: 37
+Return-Path: vishalakshi.mandala@outlook.com
+X-MS-Exchange-Organization-ExpirationStartTime: 24 Mar 2025 17:42:09.0967
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: c8d5246f-71c4-4895-3356-08dd6afb3391
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: AM4PEPF00027A69.eurprd04.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: AM4PEPF00027A69.eurprd04.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: AM4PEPF00027A69.eurprd04.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 3/24/2025 5:41:37 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 6f79711b-04fb-4039-b947-08dd6afb31b0
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 40.92.53.52
+X-SID-PRA: VISHALAKSHI.MANDALA@OUTLOOK.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|13020799006|7140799003|47200799021|19300799024|461199028|58200799018|1380799030|1360799030|1370799030|440099028|3412199025|1710799026;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Mar 2025 17:42:08.6749
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: c8d5246f-71c4-4895-3356-08dd6afb3391
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-AuthSource: AM4PEPF00027A69.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB7408
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:04.0737301
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8583.000
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:I;OFR:SpamFilterPass;ENG:(5062000308)(920221119095)(90000117)(920221120095)(90013020)(91025020)(91040095)(9050020)(9060121)(9100341)(1000006)(944500132)(2008001181)(4810010)(4910033)(9920006)(9510006)(10105021)(9320005)(9230038)(120001);
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0xO1NDTD0tMQ==
+X-Microsoft-Antispam-Message-Info:
+	=?iso-8859-1?Q?D7TQRKxdlCxaYxY86aRjEjdfD/KnFHW3pfJRefrN5oftnMjg/sVHVVHoW0?=
+ =?iso-8859-1?Q?pNxZIfQfZViJil9CYBOWeGKb9HFaJGI3ZCXcEFqhPSMgqA9EGAgvLs2ET4?=
+ =?iso-8859-1?Q?54P4D3NmJd3Tf3MAT05fleNi84NrOwaKIY/IvJlO4Sw5pfj8GZoSRcPYHc?=
+ =?iso-8859-1?Q?5YZMnkUy546P1DVCQdTvmzHhrzd52WEqwChaNH3Erkpaz4P2HxautzLFnN?=
+ =?iso-8859-1?Q?tiDxkLQehZZaXvFU1CuDAeOIJ/fUQF69KyTD2/ftlProlYcuHutEU/Vfb2?=
+ =?iso-8859-1?Q?xV2akKBa+wR0HQr3rEi29iaUPA6ZkrFnEKaKxhHYdkHck5NxAb0xUwezNB?=
+ =?iso-8859-1?Q?v0n+05AndsirD7wMx272VKBckkVOiycPBwu57Rq5mwsdYTmECAWhI5NdNR?=
+ =?iso-8859-1?Q?iWRr+55/d3ho7r84ZxDX8ka5W+nYUydlzUuuAo6UhEq2cjkxL8S9mZTjMF?=
+ =?iso-8859-1?Q?g1F9RH4RL8ujWzMNYsLbw6AlhNCpDsyS2mj1lActNUw/jndm1G+tHNLIZl?=
+ =?iso-8859-1?Q?I2Rxs69B85Uh0KZEchKN2SPOkaHn8TSmvalMTPkldoninu8QG32TavfyFH?=
+ =?iso-8859-1?Q?1k3s7NdcTo4HbudZC7IXl92yx7Sih3En+g1yRTO4S5NARokxei5bMIQrcP?=
+ =?iso-8859-1?Q?9xXVeAMIK49KFUNa3yg9zSV2Ae9wgzqwcRQe5vtzgTIBpbdDy3EwK0PAVD?=
+ =?iso-8859-1?Q?mrlunfHTD2yaJ8hoWb+DSj51PlpGCWhHk1vJrkrpN3S3KRNkwPJdwvki0d?=
+ =?iso-8859-1?Q?WmllAkdRT5/KOfmDBT1cd5ZXxOEfki4zc0Ylo46KBOHbcW5EWyafc6NF06?=
+ =?iso-8859-1?Q?dr1033c/ZC0eTea+nnNqmFy6mhrUccn/SYoc5QGFuHmNXt6aw7XHoBuuU+?=
+ =?iso-8859-1?Q?ZCjo3i3gvi9KiAsuMPGj3ro8kTG1nUQ/vJl57Nv94BSFnXoWvhsaCuHGyk?=
+ =?iso-8859-1?Q?cMKG/wlLzVRc3/+kk7S7+wvVdxChLOXcdB0PmLdL61w7nR3488vrKswxCw?=
+ =?iso-8859-1?Q?BTPsGQtkpWbjqm/OcFLQ874eYHQntOMSonyvxmEDHps/4izVVXnGF3QxXE?=
+ =?iso-8859-1?Q?El9LisOAddzWASgFQ1jRhnwAEtX3ValPjY9/S/n948hOhY+w+cVqXGVJ8c?=
+ =?iso-8859-1?Q?zhs9ZcpwIF7vSPp5hdwLeNFbddl+vKhXnH3PscOr+McobHgut+uzJr9F+g?=
+ =?iso-8859-1?Q?RruSUaivH0Wo+BZyp7hPBNHAPFpp6POYy6cLGkduN3giLh5+6+KFT1JyLi?=
+ =?iso-8859-1?Q?9qoJaCGwiKQziHp3BeeqCfHoNeOvf9vxaFwHPmKiz709GZ5R/lc62JjCvC?=
+ =?iso-8859-1?Q?7OODrl1ni1Xpz0uQC43ZhApjk3dQFAV3hH7WSuNpyWwlbEF/3FU/2u2qbs?=
+ =?iso-8859-1?Q?fqhICr8Fq3muotVZnpdERd2OBTjeQphY3ckI+LK886+qWzH1cGHcCPJtnq?=
+ =?iso-8859-1?Q?0fuC8VEJiw4u4oQNohtp61uzJ5RwCE2wCFcffw+NnDHiYVeetggujD3TTc?=
+ =?iso-8859-1?Q?a2oIuvDym/46TconJ1OYOHL9EKrPEW8PFgBAGpF3PZ4BMDO2kDmzOYSBOD?=
+ =?iso-8859-1?Q?w69lE5JSGWCpx3I4wE4sZUrlUgcNmuBY8zC1oG+GxXjI1ddKhM8sgdy+cB?=
+ =?iso-8859-1?Q?xMCfulGXnvZzPBd5vd96FIqnm7c12FUbysgy1tA01Ib3u0KI4tGbD+ay4d?=
+ =?iso-8859-1?Q?RDRtSm+dkzHMAePcUS/gO/Lhz/PkxHPU+s0epvmZp5M/1TqCjwhgDGhRd8?=
+ =?iso-8859-1?Q?hXg64kPO1CmtjUEqs2Yhuzzkv3qKswpfJL+D+Z5ov64MtJ5YfPv4D1lv5l?=
+ =?iso-8859-1?Q?B0xIdWQaVbYChr/Qm+fiftEjELV9YTa/82HMbe0G6MuKzb/Fw34JVUrkQM?=
+ =?iso-8859-1?Q?cjtMS5b/g8cNBxJGvzcqyNBUj5+NDvkQMd0aqFAsfoXTGUSpAyhouBwUPM?=
+ =?iso-8859-1?Q?/wgc8lwek4uZO3OCoO0Gk61gi92IPOakryrXtCVaUK+Y7PS89uK6X7mJhn?=
+ =?iso-8859-1?Q?uM6Vlgas95kL73ha/UGE5XVV/diXRpJs9FB/+hcTcSzCVl2dibtIEgd/JB?=
+ =?iso-8859-1?Q?3KA0m8uST4JE4OR07oyPZUt3WEP2121lWioMnYKj3O44kG3h4wmXOmMwPy?=
+ =?iso-8859-1?Q?RIjxfb6tDi/2UQ1BIipfnEEmTa3u7BZaDrs/1j4xaqNcxkz6g9CY5AXP9q?=
+ =?iso-8859-1?Q?QDYV7ea0rE7ee9lLwzF3u33qdJkCRvg+DWmH7wIyzxnMXUrX8Aqb6ohwcx?=
+ =?iso-8859-1?Q?uSSXL3+322qgpfivyCEt08I18J4Cv3aiflrJfw+6aU/4nqm0yUc/Yevg2J?=
+ =?iso-8859-1?Q?TkbZcO96BiISKuA=3D?=
+MIME-Version: 1.0
+
+--_000_TYZPR02MB735562C2A272808A8276964FE9A42TYZPR02MB7355apcp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Team,
+
+This is the Closing Notice for the Loan No:001. Please complete the closure=
+ activity.
+
+Regards
+Vish
+
+
+--_000_TYZPR02MB735562C2A272808A8276964FE9A42TYZPR02MB7355apcp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"direction: ltr; text-align: left; text-indent: 0px; margin: 0=
+px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, H=
+elvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+Hi Team,</div>
+<div style=3D"direction: ltr; text-align: left; text-indent: 0px; margin: 0=
+px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, H=
+elvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"direction: ltr; text-align: left; text-indent: 0px; margin: 0=
+px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, H=
+elvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+This is the Closing Notice for the Loan No:001. Please complete the closure=
+ activity.</div>
+<div style=3D"direction: ltr; text-align: left; text-indent: 0px; margin: 0=
+px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, H=
+elvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"direction: ltr; text-align: left; text-indent: 0px; margin: 0=
+px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, H=
+elvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+Regards</div>
+<div style=3D"direction: ltr; text-align: left; text-indent: 0px; margin: 0=
+px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, H=
+elvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+Vish</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+<br>
+</div>
+</body>
+</html>
+
+--_000_TYZPR02MB735562C2A272808A8276964FE9A42TYZPR02MB7355apcp_--

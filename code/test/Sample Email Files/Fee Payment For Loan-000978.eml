@@ -1,0 +1,298 @@
+Received: from KL1PR02MB6310.apcprd02.prod.outlook.com (2603:1096:820:b8::9)
+ by TYZPR02MB7355.apcprd02.prod.outlook.com with HTTPS; Mon, 24 Mar 2025
+ 18:17:57 +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=GAabsWJorDtq+hMSvdXdWcKcuwFXIJ2cZYvQYODUj4s2J85jcH2ByIioIaazkEW022pY05iGpJqaOxlX1sMukYb0yF+i3/OX/ir2aJOo1textSqOTlDq/S5Til38y50EpnfXuCHqsEjSzf2rNxCu6sYZm5nnDeUrCjihGhaYqXdtIpv7NUN4YL1L+cVO1wlsp9DpI/Rqd8RfKlafq0NAEkzeKuqCc8+xUimW1HmtWM0OHzK64BIonLxNXnxE57ejq29Nnx1uYJrDqS2eZNk85XtRf1pV4/1K89saOj4Z3MfSS4/Igo6Z57rUwTV5v7v3aPM6ToPcCilKGQok3msLlw==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SynRz2+zkGSeLxuKL5j4hMJXg+nzrBYJFPx7yp+c+20=;
+ b=BYCOob3pqiKdETycSE3gkpn03UEjcc68jz4AeKqUUwTThHEVPTsRu37He2gjn8mVaViCHXEed7jNS9wVk0haUUdpdfQ+w6HSFIzLzwqIwk1dIIwUa75kvit2ioS2RN1qVx41NsDzg8iEl/JDT0fJUthH83QIY8GexII202XoQvs42FOlIs3MOQkTg6UuPZWOQO5+9Ln66DJPgpziJ7SljrjyyV1wKlOYYSW9w9eyyShSyKF0n20wRhU0dmIUTKMbFr+eGxqeUVY+C7frb3vzwzP21SWfIWt0NGYVbmOR/mYFtEMIR7D6atznt9BQ3w46USbvmBHxaygBPp5sgeQR7w==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 40.92.52.54) smtp.rcpttodomain=outlook.com smtp.mailfrom=outlook.com;
+ dmarc=pass (p=none sp=quarantine pct=100) action=none
+ header.from=outlook.com; dkim=pass (signature was verified)
+ header.d=outlook.com; arc=pass (0 oda=0 ltdi=1)
+Received: from PH7PR10CA0010.namprd10.prod.outlook.com (2603:10b6:510:23d::19)
+ by KL1PR02MB6310.apcprd02.prod.outlook.com (2603:1096:820:b8::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8583.24; Mon, 24 Mar
+ 2025 18:17:56 +0000
+Received: from SN1PEPF00036F43.namprd05.prod.outlook.com
+ (2603:10b6:510:23d:cafe::92) by PH7PR10CA0010.outlook.office365.com
+ (2603:10b6:510:23d::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.34 via Frontend Transport; Mon,
+ 24 Mar 2025 18:17:54 +0000
+Authentication-Results: spf=pass (sender IP is 40.92.52.54)
+ smtp.mailfrom=outlook.com; dkim=pass (signature was verified)
+ header.d=outlook.com;dmarc=pass action=none
+ header.from=outlook.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of outlook.com designates
+ 40.92.52.54 as permitted sender) receiver=protection.outlook.com;
+ client-ip=40.92.52.54; helo=APC01-PSA-obe.outbound.protection.outlook.com;
+ pr=C
+Received: from APC01-PSA-obe.outbound.protection.outlook.com (40.92.52.54) by
+ SN1PEPF00036F43.mail.protection.outlook.com (10.167.248.27) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.20
+ via Frontend Transport; Mon, 24 Mar 2025 18:17:53 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:B94E31509ABC6060744265418A129919DF4B5433A35FB20CBC0D10CE9DEFBE40;UpperCasedChecksum:CA7CBDCF1C480C48F358BBC9397CF39C43FC20756286E1F803A1238485962C55;SizeAsReceived:8033;Count:39
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HYgFyX+AzWV3O4fcgFqx6fn7MR0TMlHBM9nEoKzB3ndFB0/FtIn3ma/MbKf9LETZuhzrYJyfGdEsibpMfUoF5DfFBecjRzfV3jdiKTHPpcNyBLpM3DFXPIis9XImsYFI+URiIZq5ZeGLSl6j1d8rOXrVd4i6X3ngLy7i5KsKECvaExrZ92ttyxF0BoZK0E6eP2lRI3CS9Pwpd9WhwDvziub5nrJoNRXjLvW3G8sLiOGNqs6b+ql9qIHVgHR30zufbzWL4TcQJiUN1GOdZmwglzxNUcS7am+ucLxtVRaaLVR8g1h5VTX1g30W48pXfsJnbYYcIqaNNVjsSdRPr6KWTw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SynRz2+zkGSeLxuKL5j4hMJXg+nzrBYJFPx7yp+c+20=;
+ b=pIwAajNQGmpg0ESvRv7GgJkvlirUH3GA8U+6LUcWYFSJu6E/WsO0g+jhCS8wGVB5pDX5jM/cJiI1XYgTzzAQPQ2SSbf8AM4Oi/q+Miyh8OaFZ9fMBf5lTc0cEyoS2PuWO23b4KQB+kwWIY2JC5aZKfdHEUq7dLu6B/gWPNRYC5zTCTr4YjNCOgqQJ0s55fjm5XsjKE76krNx+JHKaUUp0QsAC1rnPwVgw4hcNr7sQ0igcbfBw1X7zi5gs5s6LUnM+69EDUVHy4k3v3AeOofyVd00sHADE4JFzbmX0uXLqj7TDXxT+e59qav6soFxhktLvayNzgtKAOuR6Dq+Mkte9g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SynRz2+zkGSeLxuKL5j4hMJXg+nzrBYJFPx7yp+c+20=;
+ b=ZhPuoLx7erikDdUP2VMkNuMLE+KoTKBJSaWDf7N8/cZRjmN5K92xw0+ZV/IWNLx7buXoWePRJRsedF4L+Hgk0e+VVp55j7CgnoSGgkAaZJDtwbRWh/FYVDh7Odllc9kCp3EX/Nu8LNOSOgYypHmA+Z6fuY1nIrxyhNPIGl5stpDvbTbnK9wMO6zB/NS/KkYEkp809So15yRtBUaalbwNsLkA4ifyLA883Vxi5S8jQcVMnLoB26cGly1j+xOJdzlnsL380UEOIiuHlnXmXN0NzNmkIM+hHtoGPU9LrvNMdN9pl1WWU1XkXFo1uh7yqW48RTcv/pNLmIZxL/LgjZVHzg==
+Received: from TYZPR02MB7355.apcprd02.prod.outlook.com (2603:1096:405:3e::7)
+ by TYZPR02MB7180.apcprd02.prod.outlook.com (2603:1096:405:2f::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8583.25; Mon, 24 Mar
+ 2025 18:17:52 +0000
+Received: from TYZPR02MB7355.apcprd02.prod.outlook.com
+ ([fe80::24d3:94be:8a8b:69e0]) by TYZPR02MB7355.apcprd02.prod.outlook.com
+ ([fe80::24d3:94be:8a8b:69e0%4]) with mapi id 15.20.8583.023; Mon, 24 Mar 2025
+ 18:17:52 +0000
+From: Vishalakshi Mandala R <vishalakshi.mandala@outlook.com>
+To: Vishalakshi Mandala R <vishalakshi.mandala@outlook.com>
+Subject: Fee Payment For Loan-000978
+Thread-Topic: Fee Payment For Loan-000978
+Thread-Index: AQHbnOZUD5h/Kd7WFkiKSavD/X2q+rOCl75DgAAAcqU=
+Date: Mon, 24 Mar 2025 18:17:51 +0000
+Message-ID: <TYZPR02MB7355C59E555A1CB5171BC5CAE9A42@TYZPR02MB7355.apcprd02.prod.outlook.com>
+References: <TYZPR02MB7355ED369B146AA660177924E9A42@TYZPR02MB7355.apcprd02.prod.outlook.com>
+ <TYZPR02MB7355BD7C01B23D097AF2AB60E9A42@TYZPR02MB7355.apcprd02.prod.outlook.com>
+In-Reply-To: <TYZPR02MB7355BD7C01B23D097AF2AB60E9A42@TYZPR02MB7355.apcprd02.prod.outlook.com>
+Accept-Language: en-IN, en-US
+Content-Language: en-IN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-traffictypediagnostic: TYZPR02MB7355:EE_|TYZPR02MB7180:EE_|SN1PEPF00036F43:EE_|KL1PR02MB6310:EE_|TYZPR02MB7355:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0483aa1d-6bdf-4ea7-dc62-08dd6b003231
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:14566002|15030799003|8062599003|19110799003|8060799006|15080799006|12121999004|461199028|440099028|3412199025|13041999003|11091999006|12071999003|21061999003|41001999003|3430499032|102099032|1710799026;
+X-Microsoft-Antispam-Message-Info-Original: =?us-ascii?Q?DxplZ+i/XVcLKhW07W2Sdsu2Rs0wFvEyfrIOhxu2KtKFz0oQWKS3ozV1K1Vz?=
+ =?us-ascii?Q?X5tg5erzNRzwGZjrFsVsvbrI6v2pOSbmjCWC8U5ynvvJTZezZHrL0cOaJj3o?=
+ =?us-ascii?Q?L3+MuGe5egC9haC0TMAz1ZisrBY5VlJn3YKsK95m3R8/8JJT1WeHO5oWDKGx?=
+ =?us-ascii?Q?xoxAUmY6DDpUEgXyXQQqNCx+WY4SwqsTFEBD7cueqV3epb07Ewl18j9wKXjl?=
+ =?us-ascii?Q?Ji/kzD1zx1Hn5/D7P3Z12cq4PMppbrjV+MMtT+Xz+PwgZaZpOJbxQi/3j8Wh?=
+ =?us-ascii?Q?UqKYrkrOyCTR9BbJKB3VdfXbV4mu7Z1mBD2ow+OV5LXo2CTbK8LnJlAqfY8h?=
+ =?us-ascii?Q?b51dStRcykaMAYXewzOeoxJledcnhzyB3jAQDOkjDHsgsDqcH7ux50H/halh?=
+ =?us-ascii?Q?YzNX7dsb29vD8fv5hciPuEreQL6VW7gJ8IYvlztfIljftbXt3ZuLdUZt2xD9?=
+ =?us-ascii?Q?aLLvKGcTVqL3x9ozSh6EcBOUbdzO6ouEF09qjqrfiq2PZcsnYO2JdtqC9CTb?=
+ =?us-ascii?Q?Swzgv+I0WRB4Z61ua68aWTgxyziKJDAmruosIP+OEOGd4+lUcs2LfjOgvEaV?=
+ =?us-ascii?Q?oOmZRAKqKaeDcbc4ZnIB8bzzz/aV8cC8X/6/2cSFw6vYGuVZ1ix/I86jOmT2?=
+ =?us-ascii?Q?M0kCJvIkqbl2jNbufKjMdUr8VpKe8erIMTRWKRC8mlHvZFYYXWUvctaXnZ3j?=
+ =?us-ascii?Q?XsDAge4BGZyZHvDjzOyK06TGwMUe6lh/P+x7iSSf+gJX87EXJU2dyx/YRNeg?=
+ =?us-ascii?Q?3/Oo/Tf1sOtf4+ITu6FRzf3dWJbBWkd+XXv9eLfHkn/Z19gFkKTfQ6ljxGV3?=
+ =?us-ascii?Q?rlMRMc/4fwbWOUfDNAX28EZWHQ7UooHZ23JAFo07uVzVyjcI5TFEXwqEUHzF?=
+ =?us-ascii?Q?3emZ7Li3fWWUPHqentFnwxSnrwuzy0dpwsvwMgjnydk/mgfReFDGtbnVVxy0?=
+ =?us-ascii?Q?DbZ48RA51d943ZLQD6cdmYQPD7P+idxYCJIqaJNZQvdA/dN9zj/1qthTTSBD?=
+ =?us-ascii?Q?2TtzQJcPkdi3PFUhY4WgWUfWLbfiTWUXabdOwf6EWef49yquyibABJn1tSg4?=
+ =?us-ascii?Q?SijUG2nJiW4/Rdwg7M7axiwcdrfFF9op7QkZHZT6k2uWL7ecpoiMH6GahdPi?=
+ =?us-ascii?Q?FmaLaMovDPF8dIy+Tvi2TEG8sKedXFZ9Uw4eZv6z/KuCk8kiUW2BTFa5OxXr?=
+ =?us-ascii?Q?G37s+UxkGMrNeGHuTAH4RW+Bkgkf1jmogbFfymjTxQbNWjKC2fMb1VIDwA33?=
+ =?us-ascii?Q?pTqquBMgSG2GRSX0vCo/THuTuir2F5qxoSTEcnP179z4m+IgZ/kgbdZwHLXa?=
+ =?us-ascii?Q?AVcuFYaQy0g+NWV2bqljYI+wJUx5JnmZjV5v9ojdpQNqUw=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0: =?iso-8859-1?Q?jhxIq8X/oTI+6XtoSy3Lg4BD6DIaXvMY8+Ov/Y7VaqhBFAlu4A4zuW7/kJ?=
+ =?iso-8859-1?Q?SFPJBXkcZDHmgcCEmg/TJh3UR3I+Pym7T/or8Q7NcgxCVLz6MZBwrBsmWF?=
+ =?iso-8859-1?Q?P9wayVAm9J3PTXe0hywRexdtSWjodx/f6l5ISFaYqThuv6ERa2UCjUQpuY?=
+ =?iso-8859-1?Q?E4z5742Yq6E/ZzIz2VbZAqPJbrn1+UGr72BvGRVx27oHe2NVbZ0ykRiFwV?=
+ =?iso-8859-1?Q?F4TnIBnzlLd0sI/9tZzhSSGTxlMpDchD5EJjVHHq4EoMg7OJ2eifTtguld?=
+ =?iso-8859-1?Q?384ZAsVca6ADp/2o2z0xyMzLF8gGC5rxza6cpTYhXTmDcTZ/XouMJ5IYLJ?=
+ =?iso-8859-1?Q?HWr81yqQapgbg0N1ECJ4quo9ZXCcWJFytPUAY4jLeawXquri2pnvLqEnU+?=
+ =?iso-8859-1?Q?clxOFnHSoGgJVG0bAbg2nwxa68TZtREZtCXR0vjmRSmUsMTLUGLZKklKu+?=
+ =?iso-8859-1?Q?XrYRZe+F9cVpxxpZL+E6rhuqwH2Rx7kmwBovIk90f1CrBzOVAe/4a/wgns?=
+ =?iso-8859-1?Q?ao5V/bTMdWPVmCDXXDs55LH6p7peFXQjmVfLA55E5VFHkfviZprm8qsbTe?=
+ =?iso-8859-1?Q?iZI0bcbUSFk/YvgvsYnV9+7CgF5+d2h8H/p1VJDcZTMg/OjxQkLhXDg1xO?=
+ =?iso-8859-1?Q?Evi+DDLnydhQkKtZ3KsrPX93NCrWr+oUG+dQooAz20hEaLDh1FbOj8DMbn?=
+ =?iso-8859-1?Q?nr2eWjE4zzammqR0LlxjKLUJ8EyIi/zKEJsCTyRToJVHpWBCTcIEtZd9z8?=
+ =?iso-8859-1?Q?/pUv5yHJf6x3Zj3P9CuCRjqtOVDVz2hqeIlrpPQiE19tQ232lkZrdQERvJ?=
+ =?iso-8859-1?Q?Xg7fOFzLvRcrQ4S0Gfkn2JoukqyEMLo+lQk/xsPMZl1XOUWBXy8Lyu2sk2?=
+ =?iso-8859-1?Q?eGHUo16KEJq9yCGfVwZnYAB82lFd4lXl5jjL7Yi2nmtoLn+7H6WMnFpwq7?=
+ =?iso-8859-1?Q?C5kifWQQ3UTMbDUd6aHlE+E+sMfSttKrvjrlMBo6RudD1M3gCsDD0ly3l0?=
+ =?iso-8859-1?Q?JhLNXOWetGF+YKullQssDd3oaCl0LU89r4kKvs/zL5cPIDo01V9TRDR00J?=
+ =?iso-8859-1?Q?Zdgq2pFZvkdKC1WS2yWGTWKOkihHbb7crAu2XVamJGU4a/NiuPonG9zb8w?=
+ =?iso-8859-1?Q?vsce/Lp4oxduV1zcWpHnRHvDHBkSPv5E+mQzs5Tg5CdpNONUO8AAzQ9XAo?=
+ =?iso-8859-1?Q?qkf05A7DWAShFkfPbI/BSF7eGuqIrxIQpUONIN+ElwgeoA/YAP4UO5awd4?=
+ =?iso-8859-1?Q?iwPj2r70t7zYecN91LCE37C3TOwKfM4TrbyxPWBm87FIlSs3KLF5fbFkhf?=
+ =?iso-8859-1?Q?Ia9d?=
+Content-Type: multipart/alternative;
+	boundary="_000_TYZPR02MB7355C59E555A1CB5171BC5CAE9A42TYZPR02MB7355apcp_"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR02MB7180
+X-IncomingHeaderCount: 39
+Return-Path: vishalakshi.mandala@outlook.com
+X-MS-Exchange-Organization-ExpirationStartTime: 24 Mar 2025 18:17:54.2778
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 0483aa1d-6bdf-4ea7-dc62-08dd6b003231
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: SN1PEPF00036F43.namprd05.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: SN1PEPF00036F43.namprd05.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: SN1PEPF00036F43.namprd05.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 3/24/2025 6:17:06 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: c512da07-9a4a-4eb9-e1f8-08dd6b0030d8
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 40.92.52.54
+X-SID-PRA: VISHALAKSHI.MANDALA@OUTLOOK.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|13020799006|19300799024|7140799003|47200799021|461199028|58200799018|1370799030|1380799030|1360799030|3412199025|440099028|1710799026;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Mar 2025 18:17:53.9341
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0483aa1d-6bdf-4ea7-dc62-08dd6b003231
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF00036F43.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB6310
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:03.9152014
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8583.000
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:I;OFR:SpamFilterPass;ENG:(5062000308)(920221119095)(90000117)(920221120095)(90013020)(91025020)(91040095)(9050020)(9060121)(9100341)(1000006)(944500132)(2008001181)(4810010)(4910033)(9920006)(9510006)(10105021)(9320005)(9230038)(120001);
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0xO1NDTD0tMQ==
+X-Microsoft-Antispam-Message-Info:
+	=?iso-8859-1?Q?H+8JTIHEKpnv/1u/flui5VH6SK8q+iFYC/N40uyZykSnuSp9tEuUxSgHxD?=
+ =?iso-8859-1?Q?diEHoOiSLvsTIK9BWg7EnAC8zdSLJdA1MYSHohUr+iEVrp0j8zXxGdfUzR?=
+ =?iso-8859-1?Q?2ORIW5GlTS0dz85mV9yJFrii/JAc3Mia+OiqRnwcndpScHxvO7VdFjfHF7?=
+ =?iso-8859-1?Q?aFh1074BpfQXTYdqNwCAkfPMXTvDpw5xWN9rlg/NxeLOrrnROQavyC52qo?=
+ =?iso-8859-1?Q?KrUzJkAdd+SrroAnu0ldsWrV9BP124SLUPmkRgu3WsJDzYnoqDSUmOPGGJ?=
+ =?iso-8859-1?Q?gK/UY7bmgSMHTtRJrwBAjpRF4l8bIp//rD4dlOaJgEGhmQSXGigmisjoGJ?=
+ =?iso-8859-1?Q?+ixiM8ITN/CsVoyhlsIp0uaGsaxSkXnGjLa/ELgLl7ZLE+/B2l8XcLo9FJ?=
+ =?iso-8859-1?Q?LWt9nuUdwWJefxWrWOuQVulONE1LNjyhDRpKzCaI0Fj3hxnRNthclIrf6C?=
+ =?iso-8859-1?Q?3OCWXK3Eo6DNGSgguUZxQJigUZhziQEtOnpZ/CWKQULN365VEz1HOtv3tw?=
+ =?iso-8859-1?Q?lLFzZXQKYYR5lKsEFetVu10pH7icjXkCuEvQc2AtUFbKygl5uPG775AJbP?=
+ =?iso-8859-1?Q?u97Bck6cFCIMLzIkFFipD1YQc3PY/jeMCOrbuSKgrWJhckOlNautdbMo+X?=
+ =?iso-8859-1?Q?wB7lE+5FEyEbCOXfz6+47G4IN37mzmls696p3hIokTFT0cvwl02HpNaKRQ?=
+ =?iso-8859-1?Q?PzoK8BmjQvls+jsHXsrbCgoJ9KtOYaMcYoRzpNlx7xfTNZ5bdX7SX3V/tU?=
+ =?iso-8859-1?Q?wWtofy2JooOs74tCuuflOXDbitfpPrfkvDrwfdU5NBj13EFf7o3cuMmTiF?=
+ =?iso-8859-1?Q?y2v8TLQqq5WTy15C18FJRT0eGed0Fep3HXmKrzXBscuhXTehEZaQK68Aaj?=
+ =?iso-8859-1?Q?FmEvsUMULDhzpBRP0aAimYN6RDFI7RqgWNUrUQe9ihNGX9iJcGPW4Zsr7y?=
+ =?iso-8859-1?Q?ICmO7iXBrxCmCb6Uv8BGY8hZMrMekS9ESDLDAuVmd9X04VebRnA+nSFLov?=
+ =?iso-8859-1?Q?SetQZIvQGMZJ0owdsPgLWr+7ndBH7LSZMKmJC9l7JFcG/e3Y2jiaDmiRnB?=
+ =?iso-8859-1?Q?kUzFDAmCE0ISieZyHj9BF5q6jbETfucGUH+dDpV6U4/F1yS+yqcEZh4W78?=
+ =?iso-8859-1?Q?IMMmWASuQeuIc/J/M5WFeBudzSTjli7WHdrejUvAFlNrv3kxwnHcyw8pT7?=
+ =?iso-8859-1?Q?jdMKr7ecmogoYjcmdqATTuBONW0o8TZg7CLJYp2TvM1IquddvSoO3CPaki?=
+ =?iso-8859-1?Q?dbx+CpyzWBzgaoc6z6NbAybdZrq6rxQFhWbEwiSPml74em+lUYS2fvd8gQ?=
+ =?iso-8859-1?Q?ryUZcmHrr52MSkONs9MapWkwB2Ox4rS8qJfD1iUh2+crPYoJD3QGM5fV98?=
+ =?iso-8859-1?Q?WehPOViFx9EwLYWp2b+xAypsHNfbcVTi7t4D+cX0YfZjat/D4BhAzTltnc?=
+ =?iso-8859-1?Q?Sh4SKxs7xSYwsJYdMF8oWl0ZegXhwF59o3L3oDX0pKJltsFTFt9GjL9q8w?=
+ =?iso-8859-1?Q?fubDWEk9WQ18ctk9COBOsNvHVhn37QP12zRRNvU8yPli+D/+8BlkqNpka6?=
+ =?iso-8859-1?Q?SraLJNl6GXBg+sbYFewqyz133z0DehUJ/sBLk6nskyGu81c/8gw/VsH7t/?=
+ =?iso-8859-1?Q?KigE9ehXkOLVX3F5vZ3pUu70a09QrjXtgmnuid/cve4QdWLATev9jBVwGo?=
+ =?iso-8859-1?Q?omUqY5qhuiOG6Siyfvm6U2DhhN9ee1wm73w+iOuNITHjeRPwlXDFoJc8lw?=
+ =?iso-8859-1?Q?Vmyj945H5rx6g5dSUwOyfFmbIAw4QOTl2lP7Nxvn4OpCY8GHwgoXspcMTI?=
+ =?iso-8859-1?Q?eBmn0LAyW9Hub+5dLGVw/HNsOlzbINJB8U4VxwCtNM1hL3nbfOJHJ23GWL?=
+ =?iso-8859-1?Q?WM4hkHeVIPYl+RbOd+QRb57WEewCIX3rAlEW4Fsq/PzG531RS3VdVGrQFo?=
+ =?iso-8859-1?Q?qnjuZbCK9ifKwxHSYDYd7TaZDre1zJsQHmN4BeyNitr7LqQgi9PEl8Os6e?=
+ =?iso-8859-1?Q?cKEbMUXfPEQFHLwCXHSFoW+cawAWbNKtb3MsEZEGWWavM4bELkzkG40qj2?=
+ =?iso-8859-1?Q?eBUvM7j0VctCqg94g768YcK4/OGEO+5NDXJQmawrN9Xt0WG3sVUOKOXwpb?=
+ =?iso-8859-1?Q?oQvRXhCHOH+t/fQr7Pj+zxkBETh1jaMp9LKUw3si3XioCOy9qzMZFak4/l?=
+ =?iso-8859-1?Q?1nIK6DLaV8dudYFc7Gxr8my/bTiQSE1x/C31pyqGN4hlz7+DifGS0mpTeX?=
+ =?iso-8859-1?Q?ZDnggv46CHlqtusFntLj/3MwbGZQraIIdcyD5pq6hqDpEG8K/tDA=3D=3D?=
+MIME-Version: 1.0
+
+--_000_TYZPR02MB7355C59E555A1CB5171BC5CAE9A42TYZPR02MB7355apcp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+
+Dear Customer,
+
+This is Fee Payment Reminder for the Due amount.
+
+Could You Please repay the Outstanding Due Amount for this Month for you Lo=
+an-000978.
+
+An additional Due will be added in case you will not pay the amount by 31-M=
+arch-2025.
+
+Regards
+Loan Manager
+test1-009@testgenApi.com
+
+--_000_TYZPR02MB7355C59E555A1CB5171BC5CAE9A42TYZPR02MB7355apcp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Dear Customer,</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+<br>
+</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+This is Fee Payment Reminder for the Due amount.</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; font-family: Aptos, =
+Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; fo=
+nt-size: 12pt; color: rgb(0, 0, 0);">
+Could You Please repay the Outstanding Due Amount for this Month for you Lo=
+an-000978.</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+<br>
+</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+An additional Due will be added in case you will not pay the amount by 31-M=
+arch-2025.</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+<br>
+</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Regards</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Loan Manager</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; font-family: Aptos, =
+Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; fo=
+nt-size: 12pt; color: rgb(0, 0, 0);">
+test1-009@testgenApi.com</div>
+</body>
+</html>
+
+--_000_TYZPR02MB7355C59E555A1CB5171BC5CAE9A42TYZPR02MB7355apcp_--
